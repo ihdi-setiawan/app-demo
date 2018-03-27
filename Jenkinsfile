@@ -30,5 +30,10 @@ pipeline {
                 sh "docker rmi 538471682716.dkr.ecr.ap-southeast-1.amazonaws.com/ihdi-app-demo:${env.BUILD_NUMBER}"
             }
         }
+        stage('deploy to dev') {
+            steps {
+                build job: 'ihdinawan/ihdi-infra-demo', parameters: [[$class: 'StringParameterValue', name: 'BUILD_NUMBER', value: "${env.BUILD_NUMBER}"]], wait: false
+            }
+        }
     }
 }
